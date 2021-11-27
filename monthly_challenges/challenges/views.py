@@ -3,6 +3,9 @@ from django.http import HttpResponse, HttpResponseNotFound
 
 # Create your views here
 
+def monthly_challenge_by_number(request, month):
+    return HttpResponse(month)
+
 def monthly_challenge(request, month):
     ## month -> is the identifier as defined in brackets from challenges/urls.py
     ## multiple <..> dynamic url parameters -> can be extracted simply by name as parameters in view function (as kywargs)
