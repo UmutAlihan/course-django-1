@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.urls import reverse
 
 monthly_challenges = {
     "january": 'eat no meat for entire month',
@@ -24,7 +25,10 @@ def monthly_challenge_by_number(request, month):
         return HttpResponseNotFound('<h1>This month is not supported</h1>')
 
     redirect_month = months[month - 1]
-    return HttpResponseRedirect(f"/challenges/{redirect_month}")
+    redirect_path = reverse('monthly-challenge', args=[redirect_month])
+    #builds a path: /challenge/january (january comes from args)
+    # bu sayede urls.py içerisinde değiştirirsen buraya kendiliğinden yansıtılır
+    return HttpResponseRedirect(redirect_path)
 
 def monthly_challenge(request, month):
     ## month -> is the identifier as defined in brackets from challenges/urls.py
