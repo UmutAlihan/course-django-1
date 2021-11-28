@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
-from django.template.loader import render_to_string
+
 
 monthly_challenges = {
     "january": 'eat no meat for entire month',
@@ -48,7 +49,7 @@ def monthly_challenge(request, month):
     ## multiple <..> dynamic url parameters -> can be extracted simply by name as parameters in view function (as kywargs)
     try:
         challenge_text = monthly_challenges[month]
-        response_data = render_to_string("challenges/challenge.html")
+        return render(request, "challenges/challenge.html")
         ## template not found error verirse -> settings.py içerisinde template_dirs değişkeni eklenir
         return HttpResponse(response_data)
     except:
