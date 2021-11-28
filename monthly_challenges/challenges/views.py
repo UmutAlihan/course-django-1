@@ -49,7 +49,10 @@ def monthly_challenge(request, month):
     ## multiple <..> dynamic url parameters -> can be extracted simply by name as parameters in view function (as kywargs)
     try:
         challenge_text = monthly_challenges[month]
-        return render(request, "challenges/challenge.html")
+        return render(request, "challenges/challenge.html", {
+            'text': challenge_text,
+            'month': month
+        })
         ## template not found error verirse -> settings.py içerisinde template_dirs değişkeni eklenir
         return HttpResponse(response_data)
     except:
