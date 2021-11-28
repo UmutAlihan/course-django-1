@@ -1,6 +1,7 @@
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.template.loader import render_to_string
 
 
 monthly_challenges = {
@@ -52,4 +53,4 @@ def monthly_challenge(request, month):
         ## template not found error verirse -> settings.py içerisinde template_dirs değişkeni eklenir
         return HttpResponse(response_data)
     except:
-        return HttpResponseNotFound('<h1>This month is not supported</h1>')
+        raise Http404()
