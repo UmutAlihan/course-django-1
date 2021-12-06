@@ -6,17 +6,11 @@
 {% endblock %}
 
 {% block css_files %}
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
     <link rel="stylesheet" href="{% static 'blog/index.css' %}">
 {% endblock %}
 
 {% block content %}
-    <header id="main-navigation">
-        <h1><a href=""> Alihan's Blog </a> </h1>
-        <nav>
-            <a href=""> All Posts </a>
-        </nav>
-    </header>
-
     <section id="welcome">
         <header>
             <img src="{% static 'blog/images/max.png' %}" alt="Author of This Blog">
@@ -29,16 +23,7 @@
         <h2>My Latest Thoughts</h2>
 
         <url>
-            <li>
-                <article class="post">
-                    <a href="">
-                        <img src="{% static 'blog/images/mountains.jpeg' %}" alt="Mountain Hiking">
-                        <div class="post__content"></div>
-                            <h3>Mountain Hiking</h3>
-                                <p> some text about mountain hiking.</p>
-                    </a>
-                </article>
-            </li>
+            {% include 'blog/includes/posts.html' %}
         </url>
     </section>
 
