@@ -23,7 +23,9 @@
         <h2>My Latest Thoughts</h2>
 
         <url>
-            {% include 'blog/includes/posts.html' %}
+            {% for post in posts %}
+                {% include 'blog/includes/posts.html' %}
+            {% endfor %}
         </url>
     </section>
 
