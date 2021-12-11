@@ -16,3 +16,8 @@ class Book(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.rating}"
+
+
+# Book.objects.filter(is_bestselling=True)
+# Book.objects.filter(is_bestselling=True, rating__gte=2)
+# Book.objects.filter(is_bestselling=True, rating__gte=2, title__contains="Lord")
