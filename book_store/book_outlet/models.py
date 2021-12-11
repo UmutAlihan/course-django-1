@@ -22,7 +22,12 @@ class Book(models.Model):
 # Book.objects.filter(is_bestselling=True)
 # filter: Book.objects.filter(is_bestselling=True, rating__gte=2)
 # filter: Book.objects.filter(is_bestselling=True, rating__gte=2, title__contains="Lord")
+
+# from django.db.models import Q
 # OR: Book.objects.filter(Q(rating__lte=3) | Q(is_bestselling=True))
 # AND: Book.objects.filter(Q(rating__lte=3) | Q(is_bestselling=True), Q(author="J.K. Rowling"))
 
-# from django.db.models import Q
+
+
+
+# bestsellers = Book.objects.filter(is_bestselling=True)
