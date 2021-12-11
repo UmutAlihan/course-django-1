@@ -7,7 +7,10 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Book(models.Model):
     title = models.CharField(max_length=255) # field type
-    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)])
+    author = models.CharField(null=True, max_length=100)
+    is_bestselling = models.BooleanField(default=False)
     #created_at = models.DateTimeField(auto_now_add=True)
     #updated_at = models.DateTimeField(auto_now=True)
 
