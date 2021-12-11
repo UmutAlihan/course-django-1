@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+
 # Create your models here.
 
 # models: data entities: blueprint for the database objects
@@ -19,5 +20,9 @@ class Book(models.Model):
 
 
 # Book.objects.filter(is_bestselling=True)
-# Book.objects.filter(is_bestselling=True, rating__gte=2)
-# Book.objects.filter(is_bestselling=True, rating__gte=2, title__contains="Lord")
+# filter: Book.objects.filter(is_bestselling=True, rating__gte=2)
+# filter: Book.objects.filter(is_bestselling=True, rating__gte=2, title__contains="Lord")
+# OR: Book.objects.filter(Q(rating__lte=3) | Q(is_bestselling=True))
+# AND: Book.objects.filter(Q(rating__lte=3) | Q(is_bestselling=True), Q(author="J.K. Rowling"))
+
+# from django.db.models import Q
