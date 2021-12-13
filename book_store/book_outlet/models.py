@@ -13,12 +13,12 @@ class Book(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(5)])
     author = models.CharField(null=True, max_length=100)
     is_bestselling = models.BooleanField(default=False)
-    slug = models.SlugField(default="", null=False) # Harry Potter 1 => harry-potter-1
+    slug = models.SlugField(default="", null=False, db_index=True) # Harry Potter 1 => harry-potter-1
     #created_at = models.DateTimeField(auto_now_add=True)
     #updated_at = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
-        return reverse("book-detail", args=[self.id])
+        return reverse("book-detail", args=[self.slug])
 
     def save(self, *args, **kwargs): # group all positiional and keyword arguments
         self.slug = slugify(self.title)
