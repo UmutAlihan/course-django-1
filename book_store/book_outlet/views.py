@@ -27,6 +27,6 @@ def book_detail(request, slug):
                   context= {
                       "title": book.title,
                       "author": book.author,
-                      "rating": book.author,
+                      "rating": book.rating,
                       "is_bestseller": book.is_bestselling
                   })
