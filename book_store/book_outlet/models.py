@@ -7,11 +7,19 @@ from django.utils.text import slugify
 
 # models: data entities: blueprint for the database objects
 
+class Author(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+
+
 class Book(models.Model):
     title = models.CharField(max_length=255) # field type
     rating = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)])
-    author = models.CharField(null=True, max_length=100)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True) # NULL allows book with no authors
+    # CASCADE: any deletion of the author will also delete the book
+    # PROTECT: any deletion of the author will raise an error
+    # SET_NULL: any deletion of the author will set the author to null
     is_bestselling = models.BooleanField(default=False)
     slug = models.SlugField(default="", blank=True, null=False, db_index=True) # Harry Potter 1 => harry-potter-1
     ## configuring admin are from here is not recommended
