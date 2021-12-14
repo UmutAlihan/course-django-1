@@ -11,12 +11,20 @@ class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 
+# doing cross_query:
+# books_by_rowling = Book.objects.filter(author__last_name__contains="wling")
+# inverse relation query:
+# jkr = Author.objects.get(first_name="J.K.")
+# jkr.book_set.all() # class name of related model alır, lower case yapar ve "_set" ekleyerek attribute oluşturur objene
+# yada related_name option kullanılabilir (book_set yerine)
+# jkr.books.filter(rating__gt=2)
+
 
 class Book(models.Model):
     title = models.CharField(max_length=255) # field type
     rating = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)])
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True) # NULL allows book with no authors
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, related_name="books") # NULL allows book with no authors
     # CASCADE: any deletion of the author will also delete the book
     # PROTECT: any deletion of the author will raise an error
     # SET_NULL: any deletion of the author will set the author to null
