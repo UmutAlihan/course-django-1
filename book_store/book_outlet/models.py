@@ -7,9 +7,18 @@ from django.utils.text import slugify
 
 # models: data entities: blueprint for the database objects
 
+class Address(models.Model):
+    street_address = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=5)
+    city = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'{self.street_address}, {self.city}'
+
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    address = models.OneToOneField(Address, on_delete=models.CASCADE, null=True)#, related_name="author") , null=True, blank=True)
 
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
@@ -24,6 +33,8 @@ class Author(models.Model):
 # jkr.book_set.all() # class name of related model alır, lower case yapar ve "_set" ekleyerek attribute oluşturur objene
 # yada related_name option kullanılabilir (book_set yerine)
 # jkr.books.filter(rating__gt=2)
+
+
 
 
 class Book(models.Model):
