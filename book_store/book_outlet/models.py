@@ -8,12 +8,12 @@ from django.utils.text import slugify
 # models: data entities: blueprint for the database objects
 
 class Address(models.Model):
-    street_address = models.CharField(max_length=100)
+    street = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=5)
     city = models.CharField(max_length=50)
 
     def __str__(self):
-        return f'{self.street_address}, {self.city}'
+        return f'{self.street}, {self.city}'
 
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
