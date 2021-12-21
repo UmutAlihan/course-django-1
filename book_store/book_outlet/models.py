@@ -62,6 +62,7 @@ class Book(models.Model):
         # no on_delete option for manytomany field
         # holding the data in a separate table instead using inefficient list data structure
         # on delete -> django only removes connection in that mapping table
+        # on add new data ->  author_x.published_countries.add(germany)
 
     def get_absolute_url(self):
         return reverse("book-detail", args=[self.slug])
