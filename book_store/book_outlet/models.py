@@ -7,6 +7,11 @@ from django.utils.text import slugify
 
 # models: data entities: blueprint for the database objects
 
+class Country(models.Model):
+    name = models.CharField(max_length=100)
+    code = models.CharField(max_length=2)
+
+
 class Address(models.Model):
     street = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=5)
@@ -39,8 +44,6 @@ class Author(models.Model):
 # jkr.books.filter(rating__gt=2)
 
 
-
-
 class Book(models.Model):
     title = models.CharField(max_length=255) # field type
     rating = models.IntegerField(
@@ -55,6 +58,10 @@ class Book(models.Model):
     ## use these ares to configure DB-side
     #created_at = models.DateTimeField(auto_now_add=True)
     #updated_at = models.DateTimeField(auto_now=True)
+    published_countries = models.ManyToManyField(Country, related_name="books")
+        # no on_delete option for manytomany field
+        # holding the data in a separate table instead using inefficient list data structure
+        # on delete -> django only removes connection in that mapping table
 
     def get_absolute_url(self):
         return reverse("book-detail", args=[self.slug])
