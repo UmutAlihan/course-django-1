@@ -30,3 +30,4 @@ class Post(models.Model):
     # add many-to-many here (not Tags) which is from developers perspective
 
 
+
