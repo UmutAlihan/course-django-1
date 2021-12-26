@@ -22,7 +22,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=100, unique=True, db_index=True)
     # db_index=True is for search engine optimization set automatically in SlugFields
     content = models.TextField(validators=[MinLengthValidator(10)])
-    author = models.ForeignKey(Author, on_delete=models.SET_NULL, related_name="posts")
+    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, related_name="posts")
     # one-to-many relation
     # SET_NULL means if author is deleted, set post's author to null
     # related_name is used to access author's posts from Post model as "author.posts"
