@@ -3,6 +3,11 @@ from django.db import models
 
 # Create your models here.
 
+
+class Tag(models.Model):
+    caption = models.CharField(max_length=20)
+
+
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -21,5 +26,7 @@ class Post(models.Model):
     # one-to-many relation
     # SET_NULL means if author is deleted, set post's author to null
     # related_name is used to access author's posts from Post model as "author.posts"
+    tags = models.ManyToManyField(Tag)
+    # add many-to-many here (not Tags) which is from developers perspective
 
 
