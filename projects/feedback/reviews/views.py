@@ -19,9 +19,11 @@ def review(request):
         form = ReviewForm(request.POST) # pass request to ReviewForm constructor
         if form.is_valid():
             print(form.cleaned_data)
-        return HttpResponseRedirect("/thank-you")
-        # results new get request from client, which calls thank_you view and returns that rendered html page
-    form = ReviewForm()
+            return HttpResponseRedirect("/thank-you")
+            # results new get request from client, which calls thank_you view and returns that rendered html page
+
+    else:
+        form = ReviewForm()
 
     return render(request, "reviews/review.html", {
                 "form": form
