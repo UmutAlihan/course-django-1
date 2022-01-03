@@ -26,3 +26,14 @@ class ReviewForm(forms.ModelForm):
         #fields = ['user_name', 'review_text', 'rating']
         fields = "__all__"  # except for id uses all properties in given model
         #exclude = ["ownder_comment"] # exclude some fields from form
+        labels = {
+            "user_name": "Your Name",
+            "review_text": "Your Feedback",
+            "rating": "Your Rating",
+        }
+        error_messages ={
+            "user_name": {
+                "required": "your name must not be empty!",
+                "max_length": "please enter a shorter name!"
+            }
+        }
