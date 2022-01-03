@@ -8,13 +8,11 @@ from .models import Review
 
 def review(request):
     if request.method == "POST":
-        form = ReviewForm(request.POST) # pass request to ReviewForm constructor
+        #existing_data = Review.objects.get(pk=1) # for updating use this and set "instance=existing_data" keyw arg above
+        form = ReviewForm(request.POST) #, instance=existing_data) # pass request to ReviewForm constructor
 
         if form.is_valid():
-            review = Review(user_name=form.cleaned_data['user_name'],
-                            review_text=form.cleaned_data['review_text'],
-                            rating=form.cleaned_data['rating'])
-            review.save()
+            form.save()
             return HttpResponseRedirect("/thank-you")
             # results new get request from client, which calls thank_you view and returns that rendered html page
     else:
