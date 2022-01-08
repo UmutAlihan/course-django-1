@@ -3,14 +3,29 @@ from django.http import HttpResponseRedirect
 from django.views import View
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormView
 
 from .forms import ReviewForm
 from .models import Review
 
 # Create your views here.
 
-class ReviewView(View):
-    def get(self, request):
+class ReviewView(FormView):
+    # lets django know which form class should be used for rendering on this view and validating input data
+    form_class = ReviewForm
+    template_name = "reviews/review.html"
+    # redirects to this url after form submission
+    success_url = "/thank-you"
+
+    def form_valid(self, form):
+        # this method is called when the form is valid
+        # we can do anything here, like saving the form data to a database
+        # or sending it to a third party service
+        # for example, we could send it to a custom API
+        form.save()
+        return super().form_valid(form)
+
+    """def get(self, request):
         form = ReviewForm()
 
         return render(request, "reviews/review.html", {
@@ -26,7 +41,7 @@ class ReviewView(View):
 
         return render(request, "reviews/review.html", {
             "form": form
-        })
+        })"""
 
 
 """def review(request):
@@ -70,12 +85,12 @@ class ReviewsListView(ListView):
     # use can use this to override the default value of "object_list" on template
     context_object_name = "reviews"
 
-    def get_queryset(self):
+"""    def get_queryset(self):
         # returns all reviews
         base_query = super().get_queryset()
         # filter by rating before sending query to db
         data = base_query.filter(rating__gte=4)
-        return data
+        return data"""
 
 class SingleReviewView(DetailView):
     template_name = "reviews/single_review.html"
