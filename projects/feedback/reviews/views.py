@@ -14,18 +14,19 @@ class ReviewView(CreateView):
     # for CreateView you dont need ReviewForm Model just point to the Data Model
     model = Review
     # if you wanna configure more things you can use ReviewForm
-    fields = ReviewForm # or just "__all__"
+    fields = "__all__" # ReviewForm
+    # iterable error solution: https://stackoverflow.com/questions/63337006/argument-of-type-modelformmetaclass-is-not-iterable
     template_name = "reviews/review.html"
     # redirects to this url after form submission
     success_url = "/thank-you"
 
-    def form_valid(self, form):
+    """def form_valid(self, form):
         # this method is called when the form is valid
         # we can do anything here, like saving the form data to a database
         # or sending it to a third party service
         # for example, we could send it to a custom API
         form.save()
-        return super().form_valid(form)
+        return super().form_valid(form)"""
 
     """def get(self, request):
         form = ReviewForm()
