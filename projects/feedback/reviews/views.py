@@ -3,16 +3,18 @@ from django.http import HttpResponseRedirect
 from django.views import View
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, CreateView
 
 from .forms import ReviewForm
 from .models import Review
 
 # Create your views here.
 
-class ReviewView(FormView):
-    # lets django know which form class should be used for rendering on this view and validating input data
-    form_class = ReviewForm
+class ReviewView(CreateView):
+    # for CreateView you dont need ReviewForm Model just point to the Data Model
+    model = Review
+    # if you wanna configure more things you can use ReviewForm
+    fields = ReviewForm # or just "__all__"
     template_name = "reviews/review.html"
     # redirects to this url after form submission
     success_url = "/thank-you"
