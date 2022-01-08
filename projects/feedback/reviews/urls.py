@@ -4,5 +4,6 @@ from . import views
 
 urlpatterns = [
     path("", views.ReviewView.as_view(), name="review"),  # as_view() is built in method, makes sure django can find get/post methods
-    path("thank-you", views.thank_you)
+    path("thank-you", views.ThankYouView.as_view(), name="thank-you"),
+    path("reviews", views.ReviewsListView.as_view(), name="reviews-list"),
 ]
