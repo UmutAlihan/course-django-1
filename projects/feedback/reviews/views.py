@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views import View
 from django.views.generic.base import TemplateView
+from django.views.generic import ListView
 
 from .forms import ReviewForm
 from .models import Review
@@ -61,15 +62,20 @@ def thank_you(request):
 """
 
 
-class ReviewsListView(TemplateView):
+class ReviewsListView(ListView):
     template_name = "reviews/reviews_list.html"
+    # django will fetch data for us from Review model
+    # dont instantiate just point to the model class
+    model = Review
+    # use can use this to override the default value of "object_list" on template
+    context_object_name = "reviews"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        reviews = Review.objects.all()
-        context["reviews"] = reviews
-        return context
-
+    def get_queryset(self):
+        # returns all reviews
+        base_query = super().get_queryset()
+        # filter by rating before sending query to db
+        data = base_query.filter(rating__gte=4)
+        return data
 
 class SingleReviewView(TemplateView):
     template_name = "reviews/single_review.html"
