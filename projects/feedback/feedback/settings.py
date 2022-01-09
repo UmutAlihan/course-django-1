@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'profiles',
+    'profiles',  # should install other apps otherwise their templates won't load
     'reviews',
     'django.contrib.admin',
     'django.contrib.auth',
