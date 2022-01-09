@@ -46,10 +46,10 @@ class SingleReviewView(DetailView):
 class AddFavoriteView(View):
     def post(self, request):
         review_id = request.POST["review_id"]
-        fav_review = Review.objects.get(pk=review_id)
+        # fav_review = Review.objects.get(pk=review_id) -> dont store objects in sessions only simple values (serializable)
         # request object auto-have propert "session"
         # "session" has properties as data, below we add new data to session
-        request.session["favorite_review"] = fav_review
+        request.session["favorite_review"] = review_id
         return HttpResponseRedirect("/reviews/" + review_id) # TODO: use reverse()
 
 
