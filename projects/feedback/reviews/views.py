@@ -1,101 +1,44 @@
-from django.shortcuts import render
+from reviews.models import Review
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.views import View
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import FormView, CreateView
+from django.views.generic.edit import CreateView
 
 from .forms import ReviewForm
 from .models import Review
 
 # Create your views here.
 
+
 class ReviewView(CreateView):
-    # for CreateView you dont need ReviewForm Model just point to the Data Model
     model = Review
-    # if you wanna configure more things you can use ReviewForm
-    fields = "__all__" # ReviewForm
-    # iterable error solution: https://stackoverflow.com/questions/63337006/argument-of-type-modelformmetaclass-is-not-iterable
+    form_class = ReviewForm
     template_name = "reviews/review.html"
-    # redirects to this url after form submission
     success_url = "/thank-you"
 
-    """def form_valid(self, form):
-        # this method is called when the form is valid
-        # we can do anything here, like saving the form data to a database
-        # or sending it to a third party service
-        # for example, we could send it to a custom API
-        form.save()
-        return super().form_valid(form)"""
-
-    """def get(self, request):
-        form = ReviewForm()
-
-        return render(request, "reviews/review.html", {
-            "form": form
-        })
-
-    def post(self, request):
-        form = ReviewForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect("/thank-you")
-
-        return render(request, "reviews/review.html", {
-            "form": form
-        })"""
-
-
-"""def review(request):
-    if request.method == "POST":
-        #existing_data = Review.objects.get(pk=1) # for updating use this and set "instance=existing_data" keyw arg above
-        form = ReviewForm(request.POST) #, instance=existing_data) # pass request to ReviewForm constructor
-
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect("/thank-you")
-            # results new get request from client, which calls thank_you view and returns that rendered html page
-    else:
-        form = ReviewForm()
-
-    return render(request, "reviews/review.html", {
-                "form": form
-            })"""
 
 class ThankYouView(TemplateView):
     template_name = "reviews/thank_you.html"
 
     def get_context_data(self, **kwargs):
-        ### this returns the context data as dictionary same as render() method
-        ### you can additionally pass context data to the template
         context = super().get_context_data(**kwargs)
-        context["message"] = "Thank you for your review!"
+        context["message"] = "This works!"
         return context
 
 
-"""# mostly POST requests dont return rendered html page, instead redirects to another page
-def thank_you(request):
-    return render(request, 'reviews/thank_you.html')
-"""
-
-
 class ReviewsListView(ListView):
-    template_name = "reviews/reviews_list.html"
-    # django will fetch data for us from Review model
-    # dont instantiate just point to the model class
+    template_name = "reviews/review_list.html"
     model = Review
-    # use can use this to override the default value of "object_list" on template
     context_object_name = "reviews"
 
-"""    def get_queryset(self):
-        # returns all reviews
-        base_query = super().get_queryset()
-        # filter by rating before sending query to db
-        data = base_query.filter(rating__gte=4)
-        return data"""
+    # def get_queryset(self):
+    #     base_query = super().get_queryset()
+    #     data = base_query.filter(rating__gt=4)
+    #     return data
+
 
 class SingleReviewView(DetailView):
     template_name = "reviews/single_review.html"
     model = Review
-    # you can use your model name instead of "object" on template
