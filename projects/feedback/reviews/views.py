@@ -43,13 +43,21 @@ class SingleReviewView(DetailView):
     template_name = "reviews/single_review.html"
     model = Review
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs) # dont lose already stored context data and add more to it
+        loaded_review = self.object # self.object is the "Review" object that was passed in
+        request = self.request
+        favorite_id = request.session["favorite_review"]
+        context["is_favorite"] = favorite_id == str(loaded_review.id) # compare loaded review and favorite_id (True/False)
+        return context
+
 class AddFavoriteView(View):
     def post(self, request):
         review_id = request.POST["review_id"]
         # fav_review = Review.objects.get(pk=review_id) -> dont store objects in sessions only simple values (serializable)
         # request object auto-have propert "session"
         # "session" has properties as data, below we add new data to session
-        request.session["favorite_review"] = review_id
+        request.session["favorite_review"] = review_id # initially any data posted is stored as STRING
         return HttpResponseRedirect("/reviews/" + review_id) # TODO: use reverse()
 
 
