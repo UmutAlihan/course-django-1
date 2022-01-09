@@ -120,3 +120,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# tells django where our files should be stored
+# should be absolute path -> u can use BASE_DIR which points to overall project folder
+MEDIA_ROOT = BASE_DIR / "uploads"
+

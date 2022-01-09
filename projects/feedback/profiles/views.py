@@ -3,6 +3,7 @@ from django.views import View
 from django.http import HttpResponseRedirect
 
 from .forms import ProfileForm
+from .models import UserProfile
 
 # Create your views here.
 
@@ -27,7 +28,10 @@ class CreateProfileView(View):
             # this comes from template form name="image"
             # multiple assigned names can retrieve multiple files
             print(request.FILES["user_image"])
+            profile = UserProfile(image=request.FILES["user_image"])
+            profile.save() # it only writes path to DB and move file to specified location
             return HttpResponseRedirect("/profiles")
+
 
         return render(request, "profiles/create_profile.html",
                       context= {"form": submitted_form}
