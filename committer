@@ -4,4 +4,4 @@ git add .
 sleep 3
 git commit -m "$@"
 sleep 1
-git push origin main
+git push origin file_init_uploads
