@@ -2,3 +2,5 @@
 venv
 course-codes
 *.sqlite3
+temp/*
+*.pdf
