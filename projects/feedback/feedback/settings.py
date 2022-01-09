@@ -126,3 +126,4 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/user-media/" # this is the url that will be used to access the media files, django serves files via this URL
 
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 # 1 week (how long a session lasts)
