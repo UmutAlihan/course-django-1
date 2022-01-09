@@ -124,4 +124,5 @@ STATIC_URL = '/static/'
 # tells django where our files should be stored
 # should be absolute path -> u can use BASE_DIR which points to overall project folder
 MEDIA_ROOT = BASE_DIR / "uploads"
+MEDIA_URL = "/user-media/" # this is the url that will be used to access the media files, django serves files via this URL
 

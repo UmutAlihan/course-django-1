@@ -15,9 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static # this automatically adds the static files to the url
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("reviews.urls")),
     path("profiles/", include("profiles.urls"))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # helper function to add the static files to the url
+    # MEDIA_URL is the url to the media folder
+    # MEDIA_ROOT is the path to the media folder
+    # static() servers MEDIA_ROOT via the MEDIA_URL
