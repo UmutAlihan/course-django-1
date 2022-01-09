@@ -47,7 +47,7 @@ class SingleReviewView(DetailView):
         context = super().get_context_data(**kwargs) # dont lose already stored context data and add more to it
         loaded_review = self.object # self.object is the "Review" object that was passed in
         request = self.request
-        favorite_id = request.session["favorite_review"]
+        favorite_id = request.session.get("favorite_review")
         context["is_favorite"] = favorite_id == str(loaded_review.id) # compare loaded review and favorite_id (True/False)
         return context
 
