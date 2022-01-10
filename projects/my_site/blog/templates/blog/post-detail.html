@@ -25,9 +25,12 @@
   </section>
 
 <main>
+  {{ post.content|linebreaks }}
+</main>
   <div>
     <form>
-
-    </form></div>
-</main>
+      {{ comment_form }}
+      <button>Save Comment</button>
+    </form>
+  </div>
 {% endblock %}
