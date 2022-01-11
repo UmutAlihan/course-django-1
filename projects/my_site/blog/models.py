@@ -38,6 +38,9 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag)
     # add many-to-many here (not Tags) which is from developers perspective
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 class Comment(models.Model):
     user_name = models.CharField(max_length=100)
