@@ -27,7 +27,7 @@ class StartingPageView(ListView):
 
 """ FUNCTION BASED VIEWS are COMMENTED OUT:
 def starting_page(request):
-    latest_posts = Post.objects.all().order_by('-date')[:3]
+        latest_posts = Post.objects.all().order_by('-date')[:3]
     # "-" is for descending order
     # django will convert command above into an entire SQL cmd so auto-optimized
     # creates one-long seq query to get all posts including pythonic syntax
@@ -65,7 +65,8 @@ class SinglePostView(View):
         context = {
             "post": post,
             "post_tags": post.tags.all(),
-            "comment_form": CommentForm()
+            "comment_form": CommentForm(),
+            "comments": post.comments.all().order_by("-id")
         }
         return render(request, "blog/post-detail.html", context)
 
@@ -84,7 +85,8 @@ class SinglePostView(View):
         context = {
             "post": post,
             "post_tags": post.tags.all(),
-            "comment_form": comment_form
+            "comment_form": comment_form,
+            "comments": post.comments.all().order_by("-id")
         }
         render(request, "blog/post-detail.html", context)
 
