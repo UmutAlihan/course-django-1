@@ -1,5 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views import View
 
 from .models import Post
 from .forms import CommentForm
@@ -51,12 +54,41 @@ class AllPostsView(ListView):
                   })"""
 
 
-class SinglePostView(DetailView):
+class SinglePostView(View):
     # django will auto search by slug on DetailView !!!
     # auto reaise 404 error if item not found
     template_name = 'blog/post-detail.html'
     model = Post
 
+    def get(self, request, slug): # get the slug from request
+        post = Post.objects.get(slug=slug)
+        context = {
+            "post": post,
+            "post_tags": post.tags.all(),
+            "comment_form": CommentForm()
+        }
+        return render(request, "blog/post-detail.html", context)
+
+    def post(self, request, slug):  #slug is part of the url we are redirecting
+        comment_form = CommentForm(request.POST) # contains the submitted data
+        post = Post.objects.get(slug=slug)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False) # commit=False means we don't hit the database yet, only create model instance
+            comment.post = post
+            comment.save() # take user input, add extra data and save edited data back to the database, then redirect
+            return HttpResponseRedirect(reverse("post-detail-page", args=[slug]))
+
+        # if form is invalid prepare post data by fetching again
+        # for given slug
+        # prepare the context and render template again
+        context = {
+            "post": post,
+            "post_tags": post.tags.all(),
+            "comment_form": comment_form
+        }
+        render(request, "blog/post-detail.html", context)
+
+    """ ## COMMENTED OUT BECUASE NOT USING DETAILVIEW CLASS ANYMORE
     # in order to see additional fields from Model (e.g.: Tags)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -64,7 +96,7 @@ class SinglePostView(DetailView):
         context['post_tags'] = self.object.tags.all()
         # need to add extra context to pass to template for CommentForm
         context['comment_form'] = CommentForm()
-        return context
+        return context"""
 
 """def post_detail(request, slug):
     identified_post = get_object_or_404(Post, slug=slug)
