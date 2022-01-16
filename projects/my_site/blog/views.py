@@ -106,3 +106,8 @@ class SinglePostView(View):
         "post": identified_post,
         "post_tags": identified_post.tags.all()  ## this returns list of tags so that jtemplate can iterate over it
     })"""
+
+
+class ReadLaterView(View):
+    def post(self, request):
+        pass
